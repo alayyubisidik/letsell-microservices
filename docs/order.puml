@@ -1,0 +1,55 @@
+@startuml Order
+
+entity User {
+    * id INT <<PK>>
+    -- 
+    * full_name VARCHAR
+    * username VARCHAR
+    * email VARCHAR
+    * role enum
+    * phone_number VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity Product {
+    * id INT <<PK>>
+    -- 
+    * name VARCHAR
+    * slug VARCHAR
+    * price INT
+    * stock INT
+    * imageUrl VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity Orders {
+    * id INT <<PK>>
+    * user_id INT <<FK>>
+    -- 
+    * status (unpaid, complete, cancelled)
+    * total_amount INT
+    * payment_method VARCHAR
+    * shipping_address VARCHAR
+    * note VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity OrderItems {
+    * id INT <<PK>>
+    * order_id INT <<FK>>
+    * product_id INT <<FK>>
+    -- 
+    * quantity INT
+    * total INT
+    --
+    created_at TIMESTAMP
+}
+
+User ||--|| Orders
+Orders ||--|{ OrderItems
+Product ||--o{ OrderItems 
+
+@enduml

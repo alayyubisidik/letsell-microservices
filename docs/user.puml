@@ -1,0 +1,24 @@
+@startuml test
+
+
+entity User {
+    * id INT <<PK>>
+    -- 
+    * full_name VARCHAR
+    * username VARCHAR
+    * email VARCHAR
+    * password VARCHAR
+    * role enum
+    * phone_number VARCHAR
+    * date_of_birth DATE
+    * gender enum
+    * profile_picture VARCHAR
+    * image_id VARCHAR
+    * status BOOLEAN
+    --
+    created_at TIMESTAMP
+    updated_at TIMESTAMP
+}
+
+
+@enduml

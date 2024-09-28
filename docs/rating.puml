@@ -1,0 +1,47 @@
+@startuml Product
+
+entity Rating {
+    * id INT <<PK>>
+    * user_id <<FK>>
+    * product_id <<FK>>
+    -- 
+    * rating INT
+    * review VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity RatingImage {
+    * id INT <<PK>>
+    * rating_id <<FK>>
+    -- 
+    * imageUrl VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+
+entity User {
+    * id INT <<PK>>
+    -- 
+    * full_name VARCHAR
+    * username VARCHAR
+    * profile_picture VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity Product {
+    * id INT <<PK>>
+    -- 
+    * name VARCHAR
+    * slug VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+User ||--|| Rating
+Rating ||--|{ RatingImage
+Product ||--o{ Rating 
+
+@enduml

@@ -1,0 +1,43 @@
+@startuml Product
+
+
+entity Product {
+    * id INT <<PK>>
+    * category_id INT <<PK>>
+    -- 
+    * name VARCHAR
+    * slug VARCHAR
+    * brand VARCHAR
+    * price INT
+    * description VARCHAR
+    * stock INT
+    --
+    created_at TIMESTAMP
+}
+
+entity ProductImage {
+    * id INT <<PK>>
+    * product_id INT <<PK>>
+    -- 
+    * imageUrl VARCHAR
+    * publicId VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity Category {
+    * id INT <<PK>>
+    -- 
+    * name VARCHAR
+    * slug VARCHAR
+    * imageUrl VARCHAR
+    * publicId VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+
+Category ||--o{ Product
+Product ||--|{ ProductImage
+
+@enduml

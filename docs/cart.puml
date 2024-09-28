@@ -1,0 +1,48 @@
+@startuml Product
+
+entity User {
+    * id INT <<PK>>
+    -- 
+    * full_name VARCHAR
+    * username VARCHAR
+    * email VARCHAR
+    * role enum
+    * phone_number VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity Product {
+    * id INT <<PK>>
+    -- 
+    * name VARCHAR
+    * slug VARCHAR
+    * price INT
+    * stock INT
+    * imageUrl VARCHAR
+    --
+    created_at TIMESTAMP
+}
+
+entity Carts {
+    * id INT <<PK>>
+    * user_id INT <<FK>>
+    -- 
+    created_at TIMESTAMP
+}
+
+entity CartItems {
+    * id INT <<PK>>
+    * cart_id INT <<FK>>
+    * product_id INT <<FK>>
+    -- 
+    * quantity INT
+    --
+    created_at TIMESTAMP
+}
+
+User ||--|| Carts
+Carts ||--|{ CartItems
+Product ||--o{ CartItems 
+
+@enduml

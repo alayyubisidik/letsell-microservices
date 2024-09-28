@@ -25,6 +25,8 @@ spec:
         env:
           - name: DSN
             value: "host=auth-postgres-service port=5432 user=postgres password=password dbname=users sslmode=disable timezone=Asia/Jakarta connect_timeout=5"
+          - name: CLOUDINARY_URL
+            value: "cloudinary://835511529861524:wXvVdpvkSRfIL-q8wvrhFNsXWRo@dmerqdsm3"
         ports:
           - containerPort: 8080
 

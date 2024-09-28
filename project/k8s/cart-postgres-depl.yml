@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: cart-postgres-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mnt/data/cart-postgres"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cart-postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-postgres-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cart-postgres
+  template:
+    metadata:
+      labels:
+        app: cart-postgres
+    spec:
+      containers:
+      - name: cart-postgres
+        image: postgres
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: POSTGRES_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            value: password
+          - name: POSTGRES_DB
+            value: carts
+        ports:
+          - containerPort: 5432
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-storage
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: cart-postgres-pvc
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cart-postgres-service
+spec:
+  selector:
+    app: cart-postgres
+  ports:
+    - name: cart-postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432

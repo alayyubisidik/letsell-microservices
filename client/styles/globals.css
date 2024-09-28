@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --primary: #1d24ca;
+    --bg: #000000;
+    --red: #e72929;
+}
+
+body {
+    font-family: "Poppins";
+}
